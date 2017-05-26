@@ -2,6 +2,8 @@ package com.lxl.servlet.service;
 
 import com.lxl.servlet.config.Config;
 import com.lxl.servlet.dao.ShopDaoImpl;
+import com.lxl.servlet.model.ImageModel;
+import com.lxl.servlet.model.LabelModel;
 import com.lxl.servlet.model.ShopModel;
 import com.lxl.servlet.model.TradingModel;
 import com.lxl.servlet.util.IOHelper;
@@ -29,69 +31,24 @@ public class ShopService {
         logger = Logger.getLogger();
     }
 
-    public void saveOneShopModel(HttpServletRequest request) throws Exception {
-        String input_tradingid = request.getParameter("input_tradingid");
-        String input_shopname = request.getParameter("input_shopname");
-        String input_saleType = request.getParameter("input_saletype");
-        String input_address = request.getParameter("input_address");
-        String paymentmethod = request.getParameter("input_paymentmethod");
-        String input_desc = request.getParameter("input_descibes");
-        String input_img = request.getParameter("input_img");
+    public void saveOneShopModel(ShopModel shopModel) throws Exception {
+        //插入酒店基础信息
+        boolean flag = dao.insertShopModel(shopModel);
 
-        System.out.println(input_tradingid);
-        System.out.println(input_saleType);
-        System.out.println(input_shopname);
-        System.out.println(input_address);
-        System.out.println(paymentmethod);
-        System.out.println(input_desc);
-        System.out.println(input_img);
-
-        DiskFileItemFactory factory = new DiskFileItemFactory();
-        ServletFileUpload upload = new ServletFileUpload(factory);
-        List<FileItem> fileItems = null;
-        try {
-            fileItems = upload.parseRequest(request);
-        } catch (FileUploadException e) {
-            e.printStackTrace();
+        //插入酒店图片信息
+        List<ImageModel> mImageList = shopModel.mImageList;
+        for (ImageModel imageModel : mImageList) {
+            dao.insertImageModel(imageModel);
         }
-        ShopModel shopModel = readAllParams(fileItems);
-        boolean flag = dao.insertOneShopModel(shopModel);
+        //插入打折
+        dao.insertDiscountModel(shopModel.discountModel);
+
+        //插入标签信息
+        List<LabelModel> labelModelList = shopModel.labelModelList;
+        for (LabelModel labelModel : labelModelList) {
+            dao.insertLabelModel(labelModel);
+        }
         System.out.print("flag:" + flag);
-    }
-
-    private ShopModel readAllParams(List<FileItem> fileItems) throws Exception {
-        ShopModel shopModel = new ShopModel();
-        //根据fileItem解析参数
-        DiskFileItem imgItem = null;
-        for (FileItem fileItem : fileItems) {
-            if (!(fileItem instanceof DiskFileItem)) {
-                continue;
-            }
-            DiskFileItem diskfileItem = (DiskFileItem) fileItem;
-            String fieldName = fileItem.getFieldName();
-            if (fieldName.equals("input_tradingid")) {
-                shopModel.mTradingId = NumberUtil.string2Int(IOHelper.readStrByCode(fileItem.getInputStream(), "utf-8"));
-            } else if (fieldName.equals("input_shopname")) {
-                shopModel.mShopName = IOHelper.readStrByCode(fileItem.getInputStream(), "utf-8");
-            } else if (fieldName.equals("input_img")) {
-                File file = new File(diskfileItem.getName());
-                String name = file.getName();
-                imgItem = diskfileItem;
-                shopModel.mImageName = name;
-            }
-        }
-        //存储图片
-        if (imgItem != null) {
-            File file = new File(Config.Save_Path + File.separator + shopModel.mImageName);
-            if (file.exists()) {
-                file.delete();
-            }
-            if (!file.getParentFile().exists()) {
-                file.getParentFile().mkdirs();
-            }
-            imgItem.write(file);
-        }
-        return shopModel;
     }
 
     //开个线程去存储
@@ -116,26 +73,8 @@ public class ShopService {
         return saveImgFile.getAbsolutePath();
     }
 
-    public void saveOneTradingModel(HttpServletRequest request) throws Exception {
-        String input_cityid = request.getParameter("input_cityid");
-        String input_shopid = request.getParameter("input_shopid");
-        String input_shopname = request.getParameter("input_shopname");
-        String input_address = request.getParameter("input_address");
-        String input_coordinate = request.getParameter("input_coordinate");
-        String input_desc = request.getParameter("input_desc");
-        String input_img = request.getParameter("input_img");
-
-        TradingModel tradingModel = new TradingModel();
-        tradingModel.mCityTd = Integer.parseInt(input_cityid);
-        tradingModel.mShopId = Integer.parseInt(input_shopid);
-        tradingModel.mShopName = input_shopname;
-        tradingModel.mAddress = input_address;
-        double[] longAndLat = NumberUtil.getLongAndLat(input_coordinate);
-        tradingModel.mLong = longAndLat[0];
-        tradingModel.mLat = longAndLat[1];
-        tradingModel.mDesc = input_desc;
-        tradingModel.mImg = input_img;
-        boolean flag = dao.insertOneTradingModel(tradingModel);
+    public void saveOneTradingModel(TradingModel tradingModel) throws Exception {
+        boolean flag = dao.insertTradingModel(tradingModel);
         System.out.print("insert isSuccess:" + flag);
     }
 

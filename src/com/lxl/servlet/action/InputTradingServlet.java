@@ -1,5 +1,7 @@
 package com.lxl.servlet.action;
 
+import com.lxl.servlet.model.TradingModel;
+import com.lxl.servlet.service.InputService;
 import com.lxl.servlet.service.ShopService;
 
 import javax.servlet.ServletException;
@@ -15,6 +17,7 @@ import java.io.PrintWriter;
  */
 @WebServlet(name = "InputTradingServlet")
 public class InputTradingServlet extends HttpServlet {
+    InputService inputService = new InputService();
     ShopService service = new ShopService();
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -24,7 +27,8 @@ public class InputTradingServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter writer = response.getWriter();
         try {
-            service.saveOneTradingModel(request);
+            TradingModel tradingModel = inputService.readTradingModel(request);
+            service.saveOneTradingModel(tradingModel);
             writer.write("success");
         } catch (Exception e) {
             e.printStackTrace();

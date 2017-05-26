@@ -1,7 +1,6 @@
 package com.lxl.servlet.dao;
 
-import com.lxl.servlet.model.ShopModel;
-import com.lxl.servlet.model.TradingModel;
+import com.lxl.servlet.model.*;
 
 /**
  * Created by xiangleiliu on 2017/5/25.
@@ -9,36 +8,50 @@ import com.lxl.servlet.model.TradingModel;
 public interface ShopDao {
 
     //商店
-    public void insertShopModel(ShopModel shopModel);
+    public boolean insertShopModel(ShopModel shopModel);
 
-    public void updateShopModel(ShopModel shopModel);//以shopModel中的mShopId为准更新
+    public boolean updateShopModel(ShopModel shopModel);//以shopModel中的mShopId为准更新
 
-    public void deleteShopModel(int shopId);
+    public boolean deleteShopModel(int shopId);
 
     public ShopModel selectShopModel(int shopId);
 
 
     //商区
-    public void insertTradingModel(TradingModel tradingModel);
+    public boolean insertTradingModel(TradingModel tradingModel);
 
-    public void updateTradingModel(ShopModel tradingModel);//以shopModel中的mShopId为准更新
+    public boolean updateTradingModel(ShopModel tradingModel);//tradingModel中的tradingid为准
 
-    public void deleteTradingModel(int tradingId);
+    public boolean deleteTradingModel(int tradingId);
 
-    public ShopModel selectTradingModel(int tradingId);
-
-    //打折信息
-
+    public TradingModel selectTradingModel(int tradingId);
 
     //图片
-    public void insertTradingModel(TradingModel tradingModel);
+    public boolean insertImageModel(ImageModel imageModel);
 
-    public void updateTradingModel(ShopModel tradingModel);//以shopModel中的mShopId为准更新
+    public boolean updateImageModel(ImageModel imageModel);//以ImageModel中的mImgId为准更新
 
-    public void deleteTradingModel(int tradingId);
+    public boolean deleteImageModel(int imgId);
 
-    public ShopModel selectTradingModel(int tradingId);
+    public ImageModel selectImageModel(int imgId);
 
+    //打折信息
+    public boolean insertDiscountModel(DiscountModel discountModel);
+
+    public boolean updateDiscountModel(DiscountModel discountModel);//以ImageModel中的mImgId为准更新
+
+    public boolean deleteDiscountModel(int imgId);
+
+    public DiscountModel selectDiscountModel(int imgId);
+
+    //标签信息
+    public boolean insertLabelModel(LabelModel labelModel);
+
+    public boolean updateLabelModel(LabelModel labelModel);//以ImageModel中的mImgId为准更新
+
+    public boolean deleteLabelModel(int labelId);
+
+    public LabelModel selectLabelModel(int labelId);
 
 
 }

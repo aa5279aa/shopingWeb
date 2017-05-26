@@ -115,17 +115,9 @@
             <tr>
                 <td>
                     <label>
-                        <span class="small">商圈ID</span>
-                    </label>
-                    <input type="text" name="input_shopid" id="input_shopid" value=""/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label>
                         <span class="small">商圈名称</span>
                     </label>
-                    <input type="text" name="input_shopname" id="input_shopname" value=""/>
+                    <input type="text" name="input_tradingname" id="input_tradingname" value=""/>
                 </td>
             </tr>
             <tr>
@@ -134,6 +126,14 @@
                         <span class="small">地址</span>
                     </label>
                     <input type="text" name="input_address" id="input_address" value=""/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>
+                        <span class="small">交通信息</span>
+                    </label>
+                    <input type="text" name="input_address" id="input_trafiic" value=""/>
                 </td>
             </tr>
             <tr>
@@ -150,14 +150,6 @@
                         <span class="small">描述</span>
                     </label>
                     <input type="text" name="input_desc" id="input_desc" value=""/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label>
-                        <span class="small">图片</span>
-                    </label>
-                    <input type="file" name="input_img" id="input_img" value=""/>
                 </td>
             </tr>
             <tr>
