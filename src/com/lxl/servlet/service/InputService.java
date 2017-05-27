@@ -18,7 +18,7 @@ import java.util.List;
 
 /**
  * Created by xiangleiliu on 2017/5/25.
- * ÊäÈë×ª»¯²ã
+ * è¾“å…¥è½¬åŒ–å±‚
  */
 public class InputService {
 
@@ -26,7 +26,7 @@ public class InputService {
 
     }
 
-    //ÇëÇó×ª»¯ÎªTradingModel
+    //è¯·æ±‚è½¬åŒ–ä¸ºTradingModel
     public ShopModel readShopModel(HttpServletRequest request) {
         ShopModel shopModel = new ShopModel();
         String input_tradingid = request.getParameter("input_tradingid");
@@ -44,7 +44,7 @@ public class InputService {
         return shopModel;
     }
 
-    //ÇëÇó×ª»¯ÎªShopModel
+    //è¯·æ±‚è½¬åŒ–ä¸ºShopModel
     public TradingModel readTradingModel(HttpServletRequest request) {
         String input_cityid = request.getParameter("input_cityid");
         String input_tradingname = request.getParameter("input_tradingname");
@@ -66,7 +66,7 @@ public class InputService {
     }
 
 
-    //ÇëÇó×ª»¯ÎªImgeModel
+    //è¯·æ±‚è½¬åŒ–ä¸ºImgeModel
     public ImageModel readImageModel(HttpServletRequest request) throws FileUploadException {
         DiskFileItemFactory factory = new DiskFileItemFactory();
         ServletFileUpload upload = new ServletFileUpload(factory);
@@ -76,7 +76,7 @@ public class InputService {
     }
 
 
-    //ÇëÇó×ª»¯ÎªDiscountodel
+    //è¯·æ±‚è½¬åŒ–ä¸ºDiscountodel
     public ImageModel readDiscountodel(HttpServletRequest request) throws FileUploadException {
         DiskFileItemFactory factory = new DiskFileItemFactory();
         ServletFileUpload upload = new ServletFileUpload(factory);
@@ -87,7 +87,7 @@ public class InputService {
 
 //    public ShopModel readAllParams(List<FileItem> fileItems) throws Exception {
 //        ShopModel shopModel = new ShopModel();
-//        //¸ù¾İfileItem½âÎö²ÎÊı
+//        //æ ¹æ®fileItemè§£æå‚æ•°
 //        DiskFileItem imgItem = null;
 //        for (FileItem fileItem : fileItems) {
 //            if (!(fileItem instanceof DiskFileItem)) {

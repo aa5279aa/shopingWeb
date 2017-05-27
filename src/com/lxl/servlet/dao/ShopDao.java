@@ -7,47 +7,47 @@ import com.lxl.servlet.model.*;
  */
 public interface ShopDao {
 
-    //商店
+    //鍟嗗簵
     public boolean insertShopModel(ShopModel shopModel);
 
-    public boolean updateShopModel(ShopModel shopModel);//以shopModel中的mShopId为准更新
+    public boolean updateShopModel(ShopModel shopModel);//浠hopModel涓殑mShopId涓哄噯鏇存柊
 
     public boolean deleteShopModel(int shopId);
 
     public ShopModel selectShopModel(int shopId);
 
 
-    //商区
+    //鍟嗗尯
     public boolean insertTradingModel(TradingModel tradingModel);
 
-    public boolean updateTradingModel(ShopModel tradingModel);//tradingModel中的tradingid为准
+    public boolean updateTradingModel(ShopModel tradingModel);//tradingModel涓殑tradingid涓哄噯
 
     public boolean deleteTradingModel(int tradingId);
 
     public TradingModel selectTradingModel(int tradingId);
 
-    //图片
+    //鍥剧墖
     public boolean insertImageModel(ImageModel imageModel);
 
-    public boolean updateImageModel(ImageModel imageModel);//以ImageModel中的mImgId为准更新
+    public boolean updateImageModel(ImageModel imageModel);//浠mageModel涓殑mImgId涓哄噯鏇存柊
 
     public boolean deleteImageModel(int imgId);
 
     public ImageModel selectImageModel(int imgId);
 
-    //打折信息
+    //鎵撴姌淇℃伅
     public boolean insertDiscountModel(DiscountModel discountModel);
 
-    public boolean updateDiscountModel(DiscountModel discountModel);//以ImageModel中的mImgId为准更新
+    public boolean updateDiscountModel(DiscountModel discountModel);//浠mageModel涓殑mImgId涓哄噯鏇存柊
 
     public boolean deleteDiscountModel(int imgId);
 
     public DiscountModel selectDiscountModel(int imgId);
 
-    //标签信息
+    //鏍囩淇℃伅
     public boolean insertLabelModel(LabelModel labelModel);
 
-    public boolean updateLabelModel(LabelModel labelModel);//以ImageModel中的mImgId为准更新
+    public boolean updateLabelModel(LabelModel labelModel);//浠mageModel涓殑mImgId涓哄噯鏇存柊
 
     public boolean deleteLabelModel(int labelId);
 

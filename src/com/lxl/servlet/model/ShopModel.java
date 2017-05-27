@@ -7,19 +7,19 @@ import java.util.List;
  * Created by xiangleiliu on 2017/5/3.
  */
 public class ShopModel {
-    public static int SHOP_MODEL_PAYMENT_ZFB = 1;//Ö§¸¶±¦
-    public static int SHOP_MODEL_PAYMENT_WX = 2;//Î¢ĞÅ
-    public static int SHOP_MODEL_PAYMENT_YL = 3;//ÒøÁª
+    public static int SHOP_MODEL_PAYMENT_ZFB = 1;//æ”¯ä»˜å®
+    public static int SHOP_MODEL_PAYMENT_WX = 2;//å¾®ä¿¡
+    public static int SHOP_MODEL_PAYMENT_YL = 3;//é“¶è”
 
     public int mTradingId;
     public int mShopId;
     public String mShopName;
-    public int mSaleType;//ÏúÊÛÀàĞÍ
-    public String mLocation;//Î»ÖÃ
+    public int mSaleType;//é”€å”®ç±»å‹
+    public String mLocation;//ä½ç½®
     public int mPaymentmethod;//
     public String mDesc;
     public List<ImageModel> mImageList = new ArrayList<>();
 
-    public DiscountModel discountModel = new DiscountModel();//´òÕÛĞÅÏ¢ÃèÊö
+    public DiscountModel discountModel = new DiscountModel();//æ‰“æŠ˜ä¿¡æ¯æè¿°
     public List<LabelModel> labelModelList = new ArrayList<>();//L
 }

@@ -12,6 +12,6 @@ public class ImageModel {
     public String mImgName;
     public String mImgUrl;
     public int mRelationId;//
-    public int mType;//ÀàÐÍ
+    public int mType;//ç±»åž‹
 
 }

@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * Created by xiangleiliu on 2017/5/25.
- * ´òÕÛĞÅÏ¢
+ * æ‰“æŠ˜ä¿¡æ¯
  */
 public class DiscountModel {
 

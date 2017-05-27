@@ -27,7 +27,7 @@ public class SelectTradingServlet extends HttpServlet {
         response.setContentType("text/html;charset=utf-8");
         PrintWriter writer = response.getWriter();
         try {
-            //转化获取ShopModel
+            //杞寲鑾峰彇ShopModel
             ShopModel shopModel = inputService.readShopModel(request);
             service.saveOneShopModel(shopModel);
         } catch (Exception e) {

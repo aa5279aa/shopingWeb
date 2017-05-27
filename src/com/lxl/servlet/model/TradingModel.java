@@ -8,14 +8,14 @@ import java.util.List;
  */
 public class TradingModel {
 
-    public int mCityTd;//³ÇÊĞid
+    public int mCityTd;//åŸå¸‚id
     public int mTradingId;//
     public String mTradingName;
-    public String mTraffic;//½»Í¨ĞÅÏ¢
-    public String mAddress;//µØÖ·
-    public double mLat;//¾­¶È
-    public double mLong;//Î³¶È
-    public String mDesc;//ÃèÊö
-    public List<String> mLabelList = new ArrayList<>();//ÃèÊö
-    public List<ImageModel> mImgList = new ArrayList<>();//Í¼Æ¬
+    public String mTraffic;//äº¤é€šä¿¡æ¯
+    public String mAddress;//åœ°å€
+    public double mLat;//ç»åº¦
+    public double mLong;//çº¬åº¦
+    public String mDesc;//æè¿°
+    public List<String> mLabelList = new ArrayList<>();//æè¿°
+    public List<ImageModel> mImgList = new ArrayList<>();//å›¾ç‰‡
 }
