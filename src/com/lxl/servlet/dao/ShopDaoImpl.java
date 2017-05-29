@@ -5,10 +5,9 @@ import com.lxl.servlet.model.*;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.Connection;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.*;
+import java.util.Date;
 
 /**
  * Created by xiangleiliu on 2017/5/4.
@@ -151,6 +150,48 @@ public class ShopDaoImpl implements ShopDao {
     @Override
     public TradingModel selectTradingModel(int tradingId) {
         return null;
+    }
+
+    @Override
+    public List<TradingModel> selectAllTradingModel() {
+        List<TradingModel> list = new ArrayList<>();
+        String sql = "select * from trading;";
+        PreparedStatement preStmt = null;
+        try {
+            preStmt = conn.prepareStatement(sql);
+            ResultSet rs = preStmt.executeQuery();
+            while (rs.next()) {
+                int tradingid = rs.getInt("tradingid");
+                int cityid = rs.getInt("cityid");
+                String tradingname = rs.getString("tradingname");
+                String address = rs.getString("address");
+                double latidude = rs.getDouble("latitude");
+                double longitude = rs.getDouble("longitude");
+                String describes = rs.getString("describes");
+                Timestamp createtime = rs.getTimestamp("createtime");
+                TradingModel tradingModel = new TradingModel();
+                tradingModel.mTradingId = tradingid;
+                tradingModel.mTradingId = cityid;
+                tradingModel.mTradingName = tradingname;
+                tradingModel.mAddress = address;
+                tradingModel.mLat = latidude;
+                tradingModel.mLong = longitude;
+                tradingModel.mDesc = describes;
+                tradingModel.mCreateTime = createtime;
+                list.add(tradingModel);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (preStmt != null) {
+                try {
+                    preStmt.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return list;
     }
 
     @Override

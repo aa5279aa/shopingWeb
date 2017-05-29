@@ -17,6 +17,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -51,32 +52,16 @@ public class ShopService {
         System.out.print("flag:" + flag);
     }
 
-    //开个线程去存储
-    public String saveImage(HttpServletRequest request, String imgPath, String input_shopname) throws Exception {
-        ServletInputStream requestInputStream = request.getInputStream();
-        DiskFileItemFactory factory = new DiskFileItemFactory();
-        ServletFileUpload upload = new ServletFileUpload(factory);
-        List<FileItem> fileItems = null;
-        try {
-            fileItems = upload.parseRequest(request);
-        } catch (FileUploadException e) {
-            e.printStackTrace();
-        }
-        if (fileItems.size() == 0) {
-            return "";
-        }
-        //转存图片
-        File file = new File(imgPath);
-        String name = file.getName();
-        File saveImgFile = new File(Config.Save_Path + File.separator + input_shopname + "_" + name);
-        fileItems.get(0).write(saveImgFile);
-        return saveImgFile.getAbsolutePath();
-    }
-
     public void saveOneTradingModel(TradingModel tradingModel) throws Exception {
         boolean flag = dao.insertTradingModel(tradingModel);
         System.out.print("insert isSuccess:" + flag);
     }
 
+    public List<TradingModel> getAllTradingModel() {
+
+        List<TradingModel> tradingModels = dao.selectAllTradingModel();
+
+        return tradingModels;
+    }
 
 }

@@ -2,6 +2,8 @@ package com.lxl.servlet.dao;
 
 import com.lxl.servlet.model.*;
 
+import java.util.List;
+
 /**
  * Created by xiangleiliu on 2017/5/25.
  */
@@ -25,6 +27,8 @@ public interface ShopDao {
     public boolean deleteTradingModel(int tradingId);
 
     public TradingModel selectTradingModel(int tradingId);
+
+    public List<TradingModel> selectAllTradingModel();
 
     //图片
     public boolean insertImageModel(ImageModel imageModel);

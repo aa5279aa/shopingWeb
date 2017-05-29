@@ -1,6 +1,7 @@
 package com.lxl.servlet.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,6 +17,7 @@ public class TradingModel {
     public double mLat;//经度
     public double mLong;//纬度
     public String mDesc;//描述
+    public Date mCreateTime;
     public List<String> mLabelList = new ArrayList<>();//描述
     public List<ImageModel> mImgList = new ArrayList<>();//图片
 }

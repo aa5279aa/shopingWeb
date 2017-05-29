@@ -3,12 +3,21 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
+
+    <servlet>
+        <servlet-name>InputImageServlet</servlet-name>
+        <servlet-class>com.lxl.servlet.action.InputImageServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>InputImageServlet</servlet-name>
+        <url-pattern>/input_image</url-pattern>
+    </servlet-mapping>
+
+
     <servlet>
         <servlet-name>InputShopServlet</servlet-name>
         <servlet-class>com.lxl.servlet.action.InputShopServlet</servlet-class>
     </servlet>
-
-
     <servlet-mapping>
         <servlet-name>InputShopServlet</servlet-name>
         <url-pattern>/input_shop</url-pattern>
@@ -19,11 +28,19 @@
         <servlet-name>InputTradingServlet</servlet-name>
         <servlet-class>com.lxl.servlet.action.InputTradingServlet</servlet-class>
     </servlet>
-
-
     <servlet-mapping>
         <servlet-name>InputTradingServlet</servlet-name>
         <url-pattern>/input_trading</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>SelectTradingServlet</servlet-name>
+        <servlet-class>com.lxl.servlet.action.SelectTradingServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SelectTradingServlet</servlet-name>
+        <url-pattern>/select_trading</url-pattern>
     </servlet-mapping>
 
 

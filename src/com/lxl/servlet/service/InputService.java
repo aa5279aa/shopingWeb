@@ -12,6 +12,7 @@ import org.apache.commons.fileupload.disk.DiskFileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
+import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.util.List;
@@ -29,7 +30,7 @@ public class InputService {
     //请求转化为TradingModel
     public ShopModel readShopModel(HttpServletRequest request) {
         ShopModel shopModel = new ShopModel();
-        String input_tradingid = request.getParameter("input_tradingid");
+        String input_tradingid = request.getParameter("show_tradingid");
         String input_shopname = request.getParameter("input_shopname");
         String input_saleType = request.getParameter("input_saletype");
         String input_location = request.getParameter("input_location");
@@ -82,25 +83,61 @@ public class InputService {
         ServletFileUpload upload = new ServletFileUpload(factory);
         List<FileItem> fileItems = upload.parseRequest(request);
         ImageModel imageModel = new ImageModel();
+        if (fileItems.size() > 0) {
+            FileItem fileItem = fileItems.get(0);
+            String name = fileItem.getName();
+            imageModel.mImgName = name;
+            //名称
+
+            //存储地址
+
+            //mType
+
+            //mRelationId 关联值
+
+            //mImgId自动生成
+
+        }
         return imageModel;
     }
 
-//    public ShopModel readAllParams(List<FileItem> fileItems) throws Exception {
-//        ShopModel shopModel = new ShopModel();
-//        //根据fileItem解析参数
-//        DiskFileItem imgItem = null;
-//        for (FileItem fileItem : fileItems) {
-//            if (!(fileItem instanceof DiskFileItem)) {
-//                continue;
-//            }
-//            DiskFileItem diskfileItem = (DiskFileItem) fileItem;
-//            String fieldName = fileItem.getFieldName();
-//            if (fieldName.equals("input_tradingid")) {
-//                shopModel.mTradingId = NumberUtil.string2Int(IOHelper.readStrByCode(fileItem.getInputStream(), "utf-8"));
-//            } else if (fieldName.equals("input_shopname")) {
-//                shopModel.mShopName = IOHelper.readStrByCode(fileItem.getInputStream(), "utf-8");
-//            }
-//        }
-//        return shopModel;
-//    }
+    public ShopModel readAllParams(List<FileItem> fileItems) throws Exception {
+        ShopModel shopModel = new ShopModel();
+        //根据fileItem解析参数
+        DiskFileItem imgItem = null;
+        for (FileItem fileItem : fileItems) {
+            if (!(fileItem instanceof DiskFileItem)) {
+                continue;
+            }
+            DiskFileItem diskfileItem = (DiskFileItem) fileItem;
+            String fieldName = fileItem.getFieldName();
+            if (fieldName.equals("input_tradingid")) {
+                shopModel.mTradingId = NumberUtil.string2Int(IOHelper.readStrByCode(fileItem.getInputStream(), "utf-8"));
+            } else if (fieldName.equals("input_shopname")) {
+                shopModel.mShopName = IOHelper.readStrByCode(fileItem.getInputStream(), "utf-8");
+            }
+        }
+        return shopModel;
+    }
+
+    //开个线程去存储
+    public String saveImage(HttpServletRequest request, ImageModel imageModel) throws Exception {
+        ServletInputStream requestInputStream = request.getInputStream();
+        DiskFileItemFactory factory = new DiskFileItemFactory();
+        ServletFileUpload upload = new ServletFileUpload(factory);
+        List<FileItem> fileItems = null;
+        try {
+            fileItems = upload.parseRequest(request);
+        } catch (FileUploadException e) {
+            e.printStackTrace();
+        }
+        if (fileItems.size() == 0) {
+            return "";
+        }
+        //转存图片
+        String typePath = imageModel.mType == ImageModel.IMAGE_MODEL_TYPE_SHOP ? "shop" : "trading";
+        File saveImgFile = new File(Config.Save_Path + File.separator + typePath + File.separator + imageModel.mImgName);
+        fileItems.get(0).write(saveImgFile);
+        return saveImgFile.getAbsolutePath();
+    }
 }

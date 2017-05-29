@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <html>
 <head>
+    <script type="text/javascript" src="./plugins/jquery-1.7.js"></script>
     <title> - 商场录入 - </title>
     <style type="text/css">
         body {
@@ -97,11 +98,35 @@
             color: #0000FF;
         }
     </style>
+
+    <script type="text/javascript">
+        var basePath = "http://localhost:5389/";
+        (function () {
+//            initTradings();
+        })();
+
+        //        $(function () {
+        //            initSelect();
+        //        })
+
+        function submitImage() {
+            //检查商圈名称是否为空
+            var tradingName = $('#input_tradingname');
+            if (tradingName.val() == null || tradingName.val() == undefined || tradingName.val() == "") {
+                alert("请输入商圈名称");
+                return;
+            }
+            var shopForm = $('#trading_form');
+            shopForm[0].action = "input_image";
+            shopForm.submit();
+        }
+
+    </script>
 </head>
 <body>
 
 <div id="stylized_2" class="myform">
-    <form name="form" method="get" action="input_trading" enctype="multipart/form-data">
+    <form name="form" id="trading_form" method="get" action="input_trading" enctype="multipart/form-data">
         <h1 style="text-align:center">录入商圈</h1>
         <table>
             <tr>
@@ -150,6 +175,18 @@
                         <span class="small">描述</span>
                     </label>
                     <input type="text" name="input_desc" id="input_desc" value=""/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>
+                        <span class="small">图片</span>
+                    </label>
+                    <input type="file" name="input_img" id="input_img" value=""/>
+                </td>
+                <td>
+                    <input type="button" value="上传图片"
+                           onclick="submitImage()"/>
                 </td>
             </tr>
             <tr>
