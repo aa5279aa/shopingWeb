@@ -109,16 +109,15 @@
         //            initSelect();
         //        })
 
-        function submitImage() {
-            //检查商圈名称是否为空
+        function jumpToUploadImage() {
+            //检查shopid是否为空
             var tradingName = $('#input_tradingname');
             if (tradingName.val() == null || tradingName.val() == undefined || tradingName.val() == "") {
-                alert("请输入商圈名称");
+                alert("商圈名称为空");
                 return;
             }
-            var shopForm = $('#trading_form');
-            shopForm[0].action = "input_image";
-            shopForm.submit();
+            //跳转到新的界面
+            window.location.href = "http://localhost:5389/uploadimg.jsp?fromType=trading&actionId=" + tradingName.val();
         }
 
     </script>
@@ -182,11 +181,8 @@
                     <label>
                         <span class="small">图片</span>
                     </label>
-                    <input type="file" name="input_img" id="input_img" value=""/>
-                </td>
-                <td>
                     <input type="button" value="上传图片"
-                           onclick="submitImage()"/>
+                           onclick="jumpToUploadImage()"/>
                 </td>
             </tr>
             <tr>

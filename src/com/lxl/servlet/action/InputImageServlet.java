@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.lxl.servlet.model.ImageModel;
 import com.lxl.servlet.model.TradingModel;
 import com.lxl.servlet.service.InputService;
+import org.apache.commons.fileupload.FileItem;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,7 +20,7 @@ import java.util.List;
  */
 @WebServlet(name = "InputImageServlet")
 public class InputImageServlet extends HttpServlet {
-    InputService inputService=new InputService();
+    InputService inputService = new InputService();
 
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -31,12 +32,19 @@ public class InputImageServlet extends HttpServlet {
         response.setContentType("text/html;charset=utf-8");
         PrintWriter writer = response.getWriter();
         try {
-            ImageModel imageModel = inputService.readImageModel(request);
-            inputService.saveImage(request,imageModel);
+            //解析请求参数
+            List<FileItem> list = inputService.readAllParams(request);
+
+            //转换为ImageModel
+            ImageModel imageModel = inputService.readImageModel(list);
+
+            //保存图片
+            inputService.saveImage(imageModel);
         } catch (Exception e) {
             writer.write("error");
             e.printStackTrace();
         }
+        writer.write("图片上传成功");
         writer.flush();
     }
 }
