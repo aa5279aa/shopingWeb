@@ -38,8 +38,11 @@ public class InputImageServlet extends HttpServlet {
             //转换为ImageModel
             ImageModel imageModel = inputService.readImageModel(list);
 
-            //保存图片
+            //主线程保存图片信息
+
+            //线程    保存图片
             inputService.saveImage(imageModel);
+
         } catch (Exception e) {
             writer.write("error");
             e.printStackTrace();

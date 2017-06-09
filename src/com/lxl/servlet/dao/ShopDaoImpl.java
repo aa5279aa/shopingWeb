@@ -27,76 +27,119 @@ public class ShopDaoImpl implements ShopDao {
         }
     }
 
-//    public boolean insertOneShopModel(ShopModel shopModel) {
-//        String sql = "insert into shop (tradingid,shopname,saletype,address,paymentmethod,describes,imageurl) values (?,?,?,?,?,?,?)";
-//        PreparedStatement preStmt = null;
-//        try {
-//            preStmt = conn.prepareStatement(sql);
-//            preStmt.setInt(1, shopModel.mTradingId);
-//            preStmt.setString(2, shopModel.mShopName);
-//            preStmt.setInt(3, shopModel.mSaleType);
-//            preStmt.setString(4, shopModel.mAddress);
-//            preStmt.setInt(5, shopModel.mPaymentmethod);
-//            preStmt.setString(7, shopModel.mImagePath + File.separator + shopModel.mImageName);
-//            int i = preStmt.executeUpdate();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return false;
-//        } finally {
-//            if (preStmt != null) {
-//                try {
-//                    preStmt.close();
-//                } catch (SQLException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }
-//        return true;
-//    }
-//
-//    public boolean insertOneTradingModel(TradingModel tradingModel) {
-//        String sql = "insert into trading (tradingid,cityid,tradingname,address,latitude,longitude,describes,imageurl) values (?,?,?,?,?,?,?,?)";
-//        PreparedStatement preStmt = null;
-//        try {
-//            preStmt = conn.prepareStatement(sql);
-//            preStmt.setInt(1, tradingModel.mShopId);
-//            preStmt.setInt(2, tradingModel.mCityTd);
-//            preStmt.setString(3, tradingModel.mShopName);
-//            preStmt.setString(4, tradingModel.mAddress);
-//            preStmt.setDouble(5, tradingModel.mLat);
-//            preStmt.setDouble(6, tradingModel.mLong);
-//            preStmt.setString(7, tradingModel.mDesc);
-//            preStmt.setString(8, tradingModel.mImg);
-//            int i = preStmt.executeUpdate();
-//            System.out.println("i:" + i);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return false;
-//        } finally {
-//            if (preStmt != null) {
-//                try {
-//                    preStmt.close();
-//                } catch (SQLException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }
-//        return true;
-//    }
-
     @Override
     public boolean insertShopModel(ShopModel shopModel) {
-        String sql = "insert into shop (tradingid,shopname,saletype,location,paymentmethod,describes) values (?,?,?,?,?,?)";
+        StringBuilder sql = new StringBuilder();
+        sql.append("UPDATE shop SET ");
+        sql.append(" tradingid =" + shopModel.mTradingId);
+        sql.append(" shopname =" + shopModel.mShopName);
+        sql.append(" saletype =" + shopModel.mSaleType);
+        sql.append(" location =" + shopModel.mLocation);
+        sql.append(" paymentmethod =" + shopModel.mPaymentmethod);
+        sql.append(" describes =" + shopModel.mDesc);
+
+        sql.append(" where shopid = " + shopModel.mShopId);
+        Statement stmt = null;
+        try {
+            stmt = conn.createStatement();
+            return stmt.executeUpdate(sql.toString()) > 0 ? true : false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            if (stmt != null) {
+                try {
+                    stmt.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    @Override
+    public boolean updateShopModel(ShopModel shopModel) {
+
+        return false;
+    }
+
+    @Override
+    public boolean deleteShopModel(int shopId) {
+        String sql = "delete from shop where shopid =" + shopId;
+        Statement stmt = null;
+        try {
+            stmt = conn.createStatement();
+            return stmt.executeUpdate(sql) > 0 ? true : false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            if (stmt != null) {
+                try {
+                    stmt.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    @Override
+    public ShopModel selectShopModel(int shopId) {
+        String sql = "select * from trading where shopid = " + shopId;
         PreparedStatement preStmt = null;
         try {
             preStmt = conn.prepareStatement(sql);
-            preStmt.setInt(1, shopModel.mTradingId);
-            preStmt.setString(2, shopModel.mShopName);
-            preStmt.setInt(3, shopModel.mSaleType);
-            preStmt.setString(4, shopModel.mLocation);
-            preStmt.setInt(5, shopModel.mPaymentmethod);
-            preStmt.setString(6, shopModel.mDesc);
+            ResultSet rs = preStmt.executeQuery();
+            while (rs.next()) {
+                int shopid = rs.getInt("shopid");
+                int tradingid = rs.getInt("tradingid");
+                String shopname = rs.getString("shopname");
+                int saletype = rs.getInt("saletype");
+                String location = rs.getString("location");
+                int paymentmethod = rs.getInt("paymentmethod");
+                String describes = rs.getString("describes");
+                Timestamp createtime = rs.getTimestamp("createtime");
+                ShopModel shopModel = new ShopModel();
+
+                shopModel.mShopId = shopId;
+                shopModel.mTradingId = tradingid;
+                shopModel.mShopName = shopname;
+                shopModel.mSaleType = saletype;
+                shopModel.mLocation = location;
+                shopModel.mPaymentmethod = paymentmethod;
+                shopModel.mDesc = describes;
+                shopModel.mCreateTime = createtime.getTime();
+                return shopModel;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (preStmt != null) {
+                try {
+                    preStmt.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public boolean insertTradingModel(TradingModel tradingModel) {
+        String sql = "insert into trading (cityid,tradingname,address,latitude,longitude,describes) values (?,?,?,?,?,?)";
+        PreparedStatement preStmt = null;
+        try {
+            preStmt = conn.prepareStatement(sql);
+            preStmt.setInt(1, tradingModel.mCityTd);
+            preStmt.setString(2, tradingModel.mTradingName);
+            preStmt.setString(3, tradingModel.mAddress);
+            preStmt.setDouble(4, tradingModel.mLat);
+            preStmt.setDouble(5, tradingModel.mLong);
+            preStmt.setString(6, tradingModel.mDesc);
             int i = preStmt.executeUpdate();
+            System.out.println("i:" + i);
         } catch (Exception e) {
             e.printStackTrace();
             return false;
@@ -110,29 +153,6 @@ public class ShopDaoImpl implements ShopDao {
             }
         }
         return true;
-    }
-
-    @Override
-    public boolean updateShopModel(ShopModel shopModel) {
-
-        return false;
-    }
-
-    @Override
-    public boolean deleteShopModel(int shopId) {
-
-        return false;
-    }
-
-    @Override
-    public ShopModel selectShopModel(int shopId) {
-        return null;
-    }
-
-    @Override
-    public boolean insertTradingModel(TradingModel tradingModel) {
-
-        return false;
     }
 
     @Override

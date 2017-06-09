@@ -18,6 +18,7 @@ public class ShopModel {
     public String mLocation;//位置
     public int mPaymentmethod;//
     public String mDesc;
+    public long mCreateTime;
     public List<ImageModel> mImageList = new ArrayList<>();
 
     public DiscountModel discountModel = new DiscountModel();//打折信息描述
